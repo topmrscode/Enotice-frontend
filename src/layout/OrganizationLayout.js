@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 
-class UserLayout extends Component {
+class OrganizationLayout extends Component {
   componentDidMount() {
     document.body.classList.add("background");
   }
@@ -20,4 +20,4 @@ class UserLayout extends Component {
   }
 }
 
-export default UserLayout;
+export default OrganizationLayout;
