@@ -590,7 +590,6 @@ module.exports = {
   "nav.small": "Pequeño",
   "nav.center": "Centro",
   "nav.pagination-alignment": "Alineación de Paginación",
-  "nav.breadcrumb-basic": "Migas de Pan Básico",
 
   /* 07.17.Tooltips y Popovers */
   "popover-tooltip.popover": "Popovers",

@@ -2,8 +2,6 @@ import React from "react";
 import { UncontrolledDropdown, DropdownToggle, DropdownMenu } from "reactstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
 
-import notifications from "../../data/notifications";
-
 const NotificationItem = ({ img, title, date }) => {
   return (
     <div className="d-flex flex-row mb-3 pb-3 border-bottom">
@@ -33,7 +31,7 @@ const TopnavNotifications = () => {
           color="empty"
         >
           <i className="simple-icon-bell" />
-          <span className="count">3</span>
+          <span className="count">0</span>
         </DropdownToggle>
         <DropdownMenu
           className="position-absolute mt-3 scroll"
@@ -43,9 +41,10 @@ const TopnavNotifications = () => {
           <PerfectScrollbar
             options={{ suppressScrollX: true, wheelPropagation: false }}
           >
-            {notifications.map((notification, index) => {
+            {/* !!! How to add notifications from an array of it !!!  */}
+            {/* {notifications.map((notification, index) => {
               return <NotificationItem key={index} {...notification} />;
-            })}
+            })} */}
           </PerfectScrollbar>
         </DropdownMenu>
       </UncontrolledDropdown>

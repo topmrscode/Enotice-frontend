@@ -1,54 +1,32 @@
 import React, { Component } from "react";
 import { Row, Card, CardTitle, Label, FormGroup, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
-
-import { NotificationManager } from "../../components/common/react-notifications";
 import { Formik, Form, Field } from "formik";
-
 import { Colxx } from "../../components/common/CustomBootstrap";
 import IntlMessages from "../../helpers/IntlMessages";
+import { forgotPassword } from "../../redux/actions";
+import { NotificationManager } from "../../components/common/react-notifications";
+import { connect } from "react-redux";
 
-import { login } from "../../requests/login";
-import { setSession } from "../../requests/utils";
-
-class Login extends Component {
+class ForgotPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "login@mail.com",
-      password: "password"
+      email: "demo@gogo.com"
     };
   }
 
-  onUserLogin = async (values) => {
+  onForgotPassword = (values) => {
     if (!this.props.loading) {
-      if (values.email !== "" && values.password !== "") {
-        let resp = await login(values.email, values.password);
-
-        if (resp.status.error) {
-          NotificationManager.error(
-            resp.status.message,
-            "Error",
-            3000,
-            null,
-            null,
-            ''
-          );
-    
-          return ;
-        }
-        
-        NotificationManager.success(
-          "You are now logged in",
-          "Session created",
+      if (values.email !== "") {
+        NotificationManager.successs(
+          "Please check your email.",
+          "Reset Password",
           3000,
           null,
           null,
           ''
         );
-  
-        setSession(resp.data.session);
-        this.props.history.push("/");
       }
     }
   }
@@ -63,42 +41,19 @@ class Login extends Component {
     return error;
   }
 
-  validatePassword = (value) => {
-    let error;
-    if (!value) {
-      error = "Please enter your password";
-    } else if (value.length < 4) {
-      error = "Value must be longer than 3 characters";
-    }
-    return error;
-  }
-
-  componentDidUpdate() {
-    if (this.props.error) {
-      NotificationManager.warning(
-        this.props.error,
-        "Login Error",
-        3000,
-        null,
-        null,
-        ''
-      );
-    }
-  }
-
   render() {
-    const { password, email } = this.state;
-    const initialValues = {email,password};
+
+    const { email } = this.state;
+    const initialValues = { email };
 
     return (
       <Row className="h-100">
         <Colxx xxs="12" md="10" className="mx-auto my-auto">
           <Card className="auth-card">
             <div className="position-relative image-side ">
-              <p className="text-white h2">LOGIN TO THE PLATFORM</p>
+              <p className="text-white h2">MAGIC IS IN THE DETAILS</p>
               <p className="white mb-0">
-                Please use your credentials to login.
-                <br />
+                Please use your e-mail to reset your password. <br />
                 If you are not a member, please{" "}
                 <NavLink to={`/user/register`} className="white">
                   register
@@ -111,12 +66,12 @@ class Login extends Component {
                 <span className="logo-single" />
               </NavLink>
               <CardTitle className="mb-4">
-                <IntlMessages id="user.login-title" />
+                <IntlMessages id="user.forgot-password" />
               </CardTitle>
 
               <Formik
                 initialValues={initialValues}
-                onSubmit={this.onUserLogin}>
+                onSubmit={this.onForgotPassword}>
                 {({ errors, touched }) => (
                   <Form className="av-tooltip tooltip-label-bottom">
                     <FormGroup className="form-group has-float-label">
@@ -134,22 +89,7 @@ class Login extends Component {
                         </div>
                       )}
                     </FormGroup>
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="user.password" />
-                      </Label>
-                      <Field
-                        className="form-control"
-                        type="password"
-                        name="password"
-                        validate={this.validatePassword}
-                      />
-                      {errors.password && touched.password && (
-                        <div className="invalid-feedback d-block">
-                          {errors.password}
-                        </div>
-                      )}
-                    </FormGroup>
+
                     <div className="d-flex justify-content-between align-items-center">
                       <NavLink to={`/user/forgot-password`}>
                         <IntlMessages id="user.forgot-password-question" />
@@ -164,11 +104,9 @@ class Login extends Component {
                           <span className="bounce2" />
                           <span className="bounce3" />
                         </span>
-                        <span className="label"><IntlMessages id="user.login-button" /></span>
+                        <span className="label"><IntlMessages id="user.reset-password-button" /></span>
                       </Button>
                     </div>
-
-
                   </Form>
                 )}
               </Formik>
@@ -179,9 +117,5 @@ class Login extends Component {
     );
   }
 }
-const mapStateToProps = ({ authUser }) => {
-  const { user, loading, error } = authUser;
-  return { user, loading, error };
-};
 
-export default Login;
+export default ForgotPassword

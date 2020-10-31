@@ -1,14 +1,15 @@
 import {API_BASE_URL} from "./base"
 
-export const register = async(email, password, name) => {
-    console.log(API_BASE_URL)
-    let response = await fetch(API_BASE_URL + 'organizations', {
+export const register = async(email, password) => {
+    let response = await fetch(API_BASE_URL + 'users', {
         method: "POST",
         headers: {
             'Accept': 'application/json', 
             'Content-Type': 'application/json'      
         },
-        body: JSON.stringify({email, password, name})
+        body: JSON.stringify({email, password, username: "uname", firstname: "fname", lastname: "lname"})
     });
-    return await response.json();
+    let parsedResponse = await response.json();
+    
+    return parsedResponse;
 }

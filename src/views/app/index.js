@@ -1,17 +1,33 @@
 import React, { Component, Suspense } from 'react';
 import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import AppLayout from '../../layout/AppLayout';
+import { fetchCurrentUser } from '../../requests/fetchCurrentUser';
 
 const Dashboards = React.lazy(() =>
   import(/* webpackChunkName: "dashboards" */ './dashboards')
 );
-// const BlankPage = React.lazy(() =>
-//   import(/* webpackChunkName: "blank-page" */ './blank-page')
-// );
+const BlankPage = React.lazy(() =>
+  import(/* webpackChunkName: "blank-page" */ './blank-page')
+);
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      CUser: null
+    }
+  }
+
+  async componentDidUpdate() {
+    let CUser = await fetchCurrentUser();
+    if (!CUser.status.error) {
+      this.setState({
+        CUser: CUser
+      })
+    }
+  }
+
   render() {
     const { match } = this.props;
 
@@ -29,10 +45,10 @@ class App extends Component {
                 path={`${match.url}/dashboards`}
                 render={props => <Dashboards {...props} />}
               />
-               {/* <Route
-                 path={`${match.url}/blank-page`}
-                 render={props => <BlankPage {...props} />}
-               /> */}
+              <Route
+                path={`${match.url}/blank-page`}
+                render={props => <BlankPage {...props} />}
+              />
               <Redirect to="/error" />
             </Switch>
           </Suspense>
@@ -41,14 +57,5 @@ class App extends Component {
     );
   }
 }
-const mapStateToProps = ({ menu }) => {
-  const { containerClassnames } = menu;
-  return { containerClassnames };
-};
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    {}
-  )(App)
-);
+export default withRouter(App);

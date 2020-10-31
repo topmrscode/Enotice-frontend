@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import { Row, Card, CardTitle, Label, FormGroup, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
-import { connect } from "react-redux";
 import { NotificationManager } from "../../components/common/react-notifications";
 
 import { Formik, Form, Field } from "formik";
 
-import { registerUser } from "../../redux/actions";
 import { register } from "../../requests/register";
 import IntlMessages from "../../helpers/IntlMessages";
 import { Colxx } from "../../components/common/CustomBootstrap";
@@ -23,10 +21,10 @@ class Register extends Component {
 
   onUserRegister = async (values) => {
     if (this.state.email !== "" && this.state.password !== "") {
-      let resp = await register(values.email, values.password, values.name);
-      if (resp.error) {
+      let resp = await register(values.email, values.password);
+      if (resp.status.error) {
         NotificationManager.error(
-          resp.error.message,
+          resp.status.message,
           "Error",
           3000,
           null,
@@ -45,6 +43,8 @@ class Register extends Component {
         null,
         ''
       );
+
+      console.log(resp)
       this.props.history.push("/user/login");
     }
   }
@@ -186,14 +186,5 @@ class Register extends Component {
     );
   }
 }
-const mapStateToProps = ({ authUser }) => {
-  const { user, loading } = authUser;
-  return { user, loading };
-};
 
-export default connect(
-  mapStateToProps,
-  {
-    registerUser
-  }
-)(Register);
+export default Register;
