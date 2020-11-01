@@ -3,7 +3,8 @@ import { Route, withRouter, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import AppLayout from "../../layout/AppLayout";
 
-const Home = React.lazy(() => import("./home"));
+const Dashboard = React.lazy(() => import("./dashboard"));
+const Products = React.lazy(() => import("./products"));
 
 class App extends Component {
   render() {
@@ -17,7 +18,12 @@ class App extends Component {
               <Route
                 exact
                 path={`${match.url}/`}
-                render={(props) => <Home {...props} />}
+                render={(props) => <Dashboard {...props} />}
+              />
+              <Route
+                exact
+                path={`${match.url}/products`}
+                render={(props) => <Products {...props} />}
               />
               <Redirect to="/error" />
             </Switch>

@@ -33,7 +33,8 @@ module.exports = {
   "organization.register-side-link": " log in now.",
 
   /* 03.Menu */
-  "menu.dashboards": "Dashboards",
+  "menu.dashboard": "Dashboard",
+  "menu.products": "Products",
   "menu.logout": "Logout",
 
   /* 04.Error page */

@@ -53,9 +53,9 @@ Table of Contents
 /* 00.Variables and Imports */
 @import url("https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700");
 
-$main-menu-item-height: 110px;
-$main-menu-width: 120px;
-$main-menu-width-lg: 110px;
+$main-menu-item-height: 100px;
+$main-menu-width: 100px;
+$main-menu-width-lg: 100px;
 $main-menu-width-md: 100px;
 $main-menu-width-xs: 90px;
 
@@ -64,10 +64,10 @@ $sub-menu-width-lg: 230px;
 $sub-menu-width-md: 230px;
 $sub-menu-width-xs: 230px;
 
-$navbar-height: 100px;
+$navbar-height: 80px;
 $navbar-height-xs: 70px;
 $navbar-height-md: 80px;
-$navbar-height-lg: 90px;
+$navbar-height-lg: 80px;
 
 $main-margin: 60px;
 $main-margin-lg: 50px;
@@ -663,18 +663,18 @@ button {
   font-size: 0.8rem;
   border-radius: $border-radius;
   background: $input-background;
-  border-color: rgba($primary-color, 0.15);
+  border-color: rgba($secondary-color, 0.15);
 }
 
 .dropdown-item {
   padding: 0.75rem 1.5rem;
-  color: $primary-color;
+  color: $secondary-color;
 }
 
 .dropdown-item:hover,
 .dropdown-item:focus {
   background-color: $background-color;
-  color: $primary-color;
+  color: $secondary-color;
 }
 
 .dropdown-item.active,
@@ -1766,7 +1766,7 @@ button {
     background: $background-color;
     border: initial;
     font-size: 0.8rem;
-    color: $secondary-color;
+    color: black;
     padding: 0.6rem 1rem;
 
     @include respond-below(xs) {
@@ -1880,7 +1880,7 @@ button {
 
   .header-icon {
     font-size: 16px;
-    color: $secondary-color;
+    color: $primary-color;
     padding-left: 0.6rem;
     padding-right: 0.6rem;
     vertical-align: initial;
@@ -2042,7 +2042,7 @@ button {
         font-style: normal;
         font-weight: 400;
         border-bottom: 1px solid $separator-color-light;
-        color: $primary-color;
+        color: black;
         transition: color $menu-collapse-time;
         transition: background $menu-collapse-time;
 

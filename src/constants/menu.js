@@ -1,9 +1,15 @@
-const data = [
+const items = [
   {
-    id: "dasboards",
-    icon: "iconsminds-shop-4",
-    label: "menu.dashboards",
-    to: "/organization/home",
+    id: "dashboard",
+    icon: "iconsminds-dashboard",
+    label: "menu.dashboard",
+    to: "/organization",
+  },
+  {
+    id: "products",
+    icon: "iconsminds-files",
+    label: "menu.products",
+    to: "/organization/products",
   },
 ];
-export default data;
+export default items;
