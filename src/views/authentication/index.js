@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import OrganizationLayout from "../../layout/OrganizationLayout";
 
 const Login = React.lazy(() => import("./login"));
-// const Register
+const Register = React.lazy(() => import("./register"));
 
 const Auth = ({ match }) => {
   return (
@@ -15,10 +15,10 @@ const Auth = ({ match }) => {
             path={`${match.url}/login`}
             render={(props) => <Login {...props} />}
           />
-          {/* <Route
+          <Route
             path={`${match.url}/register`}
             render={(props) => <Register {...props} />}
-          /> */}
+          />
           <Redirect to="/error" />
         </Switch>
       </Suspense>
