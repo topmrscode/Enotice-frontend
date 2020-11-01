@@ -8,7 +8,7 @@ import {
   Input,
 } from "reactstrap";
 
-// import { logout } from '../../requests/Auth'
+import { logout } from "../../requests/authentication";
 import auth_utils from "../../helpers/Auth.js";
 
 import { NavLink } from "react-router-dom";
@@ -25,13 +25,8 @@ import {
   menuHiddenBreakpoint,
   localeOptions,
 } from "../../constants/defaultValues";
-import TopnavNotifications from "./Topnav.Notifications";
 
 import { MobileMenuIcon, MenuIcon } from "../../components/svg";
-// import {
-//   listNotifications,
-//   clearNotifications,
-// } from "../../requests/Notifications";
 
 class TopNav extends Component {
   constructor(props) {
@@ -39,18 +34,7 @@ class TopNav extends Component {
 
     this.state = {
       isInFullScreen: false,
-      searchKeyword: "",
-      notifications: [],
     };
-    // this.clearNotificationsFunc = this.clearNotificationsFunc.bind(this);
-  }
-  // gestion des notifications, toutes les 2 secondes
-  componentDidMount() {
-    this.timer_id = setInterval(() => this.fetchNotifications(), 2000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timer_id);
   }
 
   handleChangeLocale = (locale) => {
@@ -66,77 +50,6 @@ class TopNav extends Component {
         document.mozFullScreenElement !== null) ||
       (document.msFullscreenElement && document.msFullscreenElement !== null)
     );
-  };
-  handleSearchIconClick = (e) => {
-    if (window.innerWidth < menuHiddenBreakpoint) {
-      let elem = e.target;
-      if (!e.target.classList.contains("search")) {
-        if (e.target.parentElement.classList.contains("search")) {
-          elem = e.target.parentElement;
-        } else if (
-          e.target.parentElement.parentElement.classList.contains("search")
-        ) {
-          elem = e.target.parentElement.parentElement;
-        }
-      }
-
-      if (elem.classList.contains("mobile-view")) {
-        this.search();
-        elem.classList.remove("mobile-view");
-        this.removeEventsSearch();
-      } else {
-        elem.classList.add("mobile-view");
-        this.addEventsSearch();
-      }
-    } else {
-      this.search();
-    }
-  };
-  addEventsSearch = () => {
-    document.addEventListener("click", this.handleDocumentClickSearch, true);
-  };
-  removeEventsSearch = () => {
-    document.removeEventListener("click", this.handleDocumentClickSearch, true);
-  };
-
-  handleDocumentClickSearch = (e) => {
-    let isSearchClick = false;
-    if (
-      e.target &&
-      e.target.classList &&
-      (e.target.classList.contains("navbar") ||
-        e.target.classList.contains("simple-icon-magnifier"))
-    ) {
-      isSearchClick = true;
-      if (e.target.classList.contains("simple-icon-magnifier")) {
-        this.search();
-      }
-    } else if (
-      e.target.parentElement &&
-      e.target.parentElement.classList &&
-      e.target.parentElement.classList.contains("search")
-    ) {
-      isSearchClick = true;
-    }
-
-    if (!isSearchClick) {
-      const input = document.querySelector(".mobile-view");
-      if (input && input.classList) input.classList.remove("mobile-view");
-      this.removeEventsSearch();
-      this.setState({
-        searchKeyword: "",
-      });
-    }
-  };
-  handleSearchInputChange = (e) => {
-    this.setState({
-      searchKeyword: e.target.value,
-    });
-  };
-  handleSearchInputKeyPress = (e) => {
-    if (e.key === "Enter") {
-      this.search();
-    }
   };
 
   toggleFullScreen = () => {
@@ -172,6 +85,11 @@ class TopNav extends Component {
   // DECONNECTION ET SUPPRESIION TOKEN --------------------
 
   // handleLogout = () => {
+  //   const response = await logout()
+  //   if (response.error != null ){
+  //     MediaStreamError()
+  //   }
+
   //   logout().then(() => {
   //     auth_utils.clear_authentication();
   //     this.props.history.push("/auth/login");
@@ -203,23 +121,11 @@ class TopNav extends Component {
     this.props.clickOnMobileMenu(containerClassnames);
   };
 
-  // // // NOTIFICATIONS GESTION
-  // fetchNotifications() {
-  //   listNotifications().then((data) => {
-  //     if (data.error == null) {
-  //       this.setState({ notifications: data.data });
-  //     }
-  //   });
-  // }
-  // clearNotificationsFunc() {
-  //   clearNotifications();
-  // }
-
   render() {
-    const me = auth_utils.is_authenticated().organization;
-
     const { containerClassnames, menuClickCount, locale } = this.props;
     const { messages } = this.props.intl;
+    const c_organization = auth_utils.is_authenticated();
+
     return (
       <nav className="navbar fixed-top">
         <div className="d-flex align-items-center navbar-left">
@@ -268,23 +174,16 @@ class TopNav extends Component {
         </div>
 
         {/* LOGO */}
-        <a className="navbar-logo" href="/schools">
+        <a className="navbar-logo" href="/organization">
           <span className="logo d-none d-xs-block" />
           <span className="logo-mobile d-block d-xs-none" />
         </a>
-        <a className="navbar-logo1" href="/schools">
+        <a className="navbar-logo1" href="/organization">
           <span className="logo d-none d-xs-block" />
           <span className="logo-mobile d-block d-xs-none" />
         </a>
         <div className="navbar-right">
           <div className="header-icons d-inline-block align-middle">
-            {/* NOTIFICATIOMS */}
-
-            <TopnavNotifications
-              notifications={this.state.notifications}
-              // clearNotifications={this.clearNotificationsFunc}
-            />
-
             {/* BOUTON FULSCREEN */}
             <button
               className="header-icon btn btn-empty d-none d-sm-inline-block"
@@ -304,8 +203,8 @@ class TopNav extends Component {
             <UncontrolledDropdown className="dropdown-menu-right">
               <DropdownToggle className="p-0" color="empty">
                 <span>
-                  {me.name}
-                  <img src="/assets/img/login-balloon.png" />
+                  {c_organization.name}
+                  <img src="/assets/img/avatar.png" />
                 </span>
               </DropdownToggle>
               {/* <DropdownMenu className="mt-3" right>

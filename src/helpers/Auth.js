@@ -1,4 +1,4 @@
-import { fetchMe } from "../requests/organizations";
+import { fetchCurrentOrganization } from "../requests/organizations";
 
 const auth_utils = {
   is_authenticated() {
@@ -14,11 +14,10 @@ const auth_utils = {
     sessionStorage.removeItem("SZ_Key");
   },
   update_authentification() {
-    var currentOrganization = JSON.parse(sessionStorage.getItem("SZ_Key"));
-    fetchMe().then((data) => {
-      console.log(data);
-      currentOrganization.organization = data.data;
-      sessionStorage.setItem("SZ_Key", JSON.stringify(currentOrganization));
+    var c_organization = JSON.parse(sessionStorage.getItem("SZ_Key"));
+    fetchCurrentOrganization().then((data) => {
+      c_organization.c_organization = data.data;
+      sessionStorage.setItem("SZ_Key", JSON.stringify(c_organization));
     });
   },
 };

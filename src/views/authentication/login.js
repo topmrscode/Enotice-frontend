@@ -15,18 +15,19 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: "",
-      errors: "",
+      error: null,
+      initialValues: { email: null, password: null },
     };
   }
 
   onSubmit = async (values) => {
     const response = await login(values);
+
+    console.log(response);
     if (response.error != null) {
-      this.setState({ errors: response.error.message });
-      return;
+      this.setState({ error: response.error.message });
     }
+
     NotificationManager.success(
       "You are now logged in.",
       "Welcome back to your account !",
@@ -35,63 +36,55 @@ class Login extends Component {
       null,
       ""
     );
-    auth_utils.authenticate(response);
-    this.props.history.push("/organizations/home");
+    auth_utils.authenticate(response.data);
+    this.props.history.push("/organization");
   };
 
   validateEmail = (value) => {
-    let errors;
+    let error;
     if (!value) {
-      errors = "Please enter your email address";
+      error = "Please enter your email address";
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-      errors = "Invalid email address";
+      error = "Invalid email address";
     }
-    return errors;
+    return error;
   };
 
   validatePassword = (value) => {
-    let errors;
+    let error;
     if (!value) {
-      errors = "Please enter your password";
+      error = "Please enter your password";
     }
-    return errors;
+    return error;
   };
 
   render() {
-    const { password, email } = this.state;
-    const initialValues = { password, email };
-
     return (
       <Row className="h-100">
-        <Colxx xxs="12" md="10" className="mx-auto my-auto">
+        <Colxx xs="12" md="10" className="mx-auto my-auto">
           <Card className="auth-card">
-            <div className="position-relative image-side ">
-              <p className="text-white h2">MAGIC IS IN THE DETAILS</p>
-              <p className="white mb-0">
-                Please use this form to login. <br />
-                If you are not a member, please{" "}
-                <NavLink to={`/organization/register`} className="white">
-                  Register
-                </NavLink>
-                .
-              </p>
-            </div>
+            <div className="position-relative image-side "></div>
             <div className="form-side">
-              <NavLink to={`/`} className="white">
-                <span className="logo-single" />
-              </NavLink>
+              <span className="logo-single" />
               <CardTitle className="mb-4">
-                <IntlMessages id="user.register" />
+                <IntlMessages id="organization.login-title" />
               </CardTitle>
-              {this.state.errors && (
-                <p style={{ color: "red" }}>{this.state.errors}</p>
+              {this.state.error && (
+                <p style={{ color: "red" }}>{this.state.error}</p>
               )}
-              <Formik initialValues={initialValues} onSubmit={this.onSubmit}>
+
+              <Formik
+                initialValues={{
+                  name: this.state.initialValues.email,
+                  password: this.state.initialValues.password,
+                }}
+                onSubmit={this.onSubmit}
+              >
                 {({ errors, touched }) => (
                   <Form className="av-tooltip tooltip-label-bottom">
                     <FormGroup className="form-group has-float-label">
                       <Label>
-                        <IntlMessages id="user.email" />
+                        <IntlMessages id="organization.email" />
                       </Label>
                       <Field
                         className="form-control"
@@ -106,7 +99,7 @@ class Login extends Component {
                     </FormGroup>
                     <FormGroup className="form-group has-float-label">
                       <Label>
-                        <IntlMessages id="user.password" />
+                        <IntlMessages id="organization.password" />
                       </Label>
                       <Field
                         className="form-control"
@@ -120,11 +113,7 @@ class Login extends Component {
                         </div>
                       )}
                     </FormGroup>
-
                     <div className="d-flex justify-content-between align-items-center">
-                      <NavLink to={`/organization/forgot-password`}>
-                        <IntlMessages id="user.forgot-password-question" />
-                      </NavLink>
                       <Button
                         color="primary"
                         className={`btn-shadow btn-multiple-state ${
@@ -138,7 +127,7 @@ class Login extends Component {
                           <span className="bounce3" />
                         </span>
                         <span className="label">
-                          <IntlMessages id="user.login-button" />
+                          <IntlMessages id="organization.login-button" />
                         </span>
                       </Button>
                     </div>
