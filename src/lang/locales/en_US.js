@@ -20,9 +20,11 @@ module.exports = {
   "organization.password": "Password",
   "organization.login-button": "LOGIN",
   "organization.register-button": "REGISTER",
+  "organization.register-in-login": "No account yet ?",
 
   /* 03.Menu */
   "menu.dashboards": "Dashboards",
+  "menu.signout": "Logout",
 
   /* 04.Error page */
 
