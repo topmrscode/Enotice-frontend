@@ -67,7 +67,7 @@ class Login extends Component {
                 <IntlMessages id="organization.login-side" />
                 <br />
                 <IntlMessages id="organization.login-side-sub" />
-                <NavLink to={`/register`}>
+                <NavLink to={`/auth/register`}>
                   <IntlMessages id="organization.login-side-link" />
                 </NavLink>
               </p>
@@ -122,7 +122,7 @@ class Login extends Component {
                       )}
                     </FormGroup>
                     <div className="d-flex justify-content-between align-items-center">
-                      <IntlMessages id="organization.forgot-password" />
+                      <span />
                       <Button
                         color="primary"
                         className={`btn-shadow btn-multiple-state btn-square ${

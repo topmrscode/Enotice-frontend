@@ -16,7 +16,7 @@ module.exports = {
   /* 02.User Login, Logout, Register */
   "organization.login-title": "Connexion",
   "organization.redirect-login": "retourner a la page de login",
-  "organization.register": "Authentification",
+  "organization.register": "Creation de compte",
   "organization.forgot-password": "Mot de passe oublie",
   "organization.email": "E-mail",
   "organization.password": "Mot de passe",
@@ -25,8 +25,8 @@ module.exports = {
   "organization.register-button": "CREER SON COMPTE",
   "organization.login-side":
     "Veuillez utiliser vos identifiants pour vous connecter.",
-  "organization.login-side-sub": "Vous n'avez pas de compte? ",
-  "organization.login-side-link": " créer un compte",
+  "organization.login-side-sub": "Vous n'avez pas encore de compte? ",
+  "organization.login-side-link": " Créer un compte",
 
   /* 03.Menu */
   "menu.dashboards": "Tableau de bord",

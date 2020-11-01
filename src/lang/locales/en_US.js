@@ -21,8 +21,8 @@ module.exports = {
   "organization.login-button": "LOGIN",
   "organization.register-button": "REGISTER",
   "organization.login-side": "Please use your credentials to login.",
-  "organization.login-side-sub": " If you are not a member, please",
-  "organization.login-side-link": " register",
+  "organization.login-side-sub": " No account yet ? Please",
+  "organization.login-side-link": " Register",
 
   /* 03.Menu */
   "menu.dashboards": "Dashboards",
