@@ -1,50 +1,65 @@
 import React, { Component } from "react";
 import { Row, Card, CardTitle, Label, FormGroup, Button } from "reactstrap";
 import { NavLink } from "react-router-dom";
+
+import { NotificationManager } from "../../components/common/react-notifications";
 import { Formik, Form, Field } from "formik";
+
 import { Colxx } from "../../components/common/CustomBootstrap";
 import IntlMessages from "../../helpers/IntlMessages";
-import { forgotPassword } from "../../redux/actions";
-import { NotificationManager } from "../../components/common/react-notifications";
-import { connect } from "react-redux";
 
-class ForgotPassword extends Component {
+import { login } from "../../requests/authentication";
+import auth_utils from "../../helpers/Auth";
+
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "demo@gogo.com"
+      email: "",
+      password: "",
+      errors: "",
     };
   }
 
-  onForgotPassword = (values) => {
-    if (!this.props.loading) {
-      if (values.email !== "") {
-        NotificationManager.successs(
-          "Please check your email.",
-          "Reset Password",
-          3000,
-          null,
-          null,
-          ''
-        );
-      }
+  onSubmit = async (values) => {
+    const response = await login(values);
+    if (response.error != null) {
+      this.setState({ errors: response.error.message });
+      return;
     }
-  }
+    NotificationManager.success(
+      "You are now logged in.",
+      "Welcome back to your account !",
+      3000,
+      null,
+      null,
+      ""
+    );
+    auth_utils.authenticate(response);
+    this.props.history.push("/organizations/home");
+  };
 
   validateEmail = (value) => {
-    let error;
+    let errors;
     if (!value) {
-      error = "Please enter your email address";
+      errors = "Please enter your email address";
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-      error = "Invalid email address";
+      errors = "Invalid email address";
     }
-    return error;
-  }
+    return errors;
+  };
+
+  validatePassword = (value) => {
+    let errors;
+    if (!value) {
+      errors = "Please enter your password";
+    }
+    return errors;
+  };
 
   render() {
-
-    const { email } = this.state;
-    const initialValues = { email };
+    const { password, email } = this.state;
+    const initialValues = { password, email };
 
     return (
       <Row className="h-100">
@@ -53,10 +68,10 @@ class ForgotPassword extends Component {
             <div className="position-relative image-side ">
               <p className="text-white h2">MAGIC IS IN THE DETAILS</p>
               <p className="white mb-0">
-                Please use your e-mail to reset your password. <br />
+                Please use this form to login. <br />
                 If you are not a member, please{" "}
-                <NavLink to={`/user/register`} className="white">
-                  register
+                <NavLink to={`/organization/register`} className="white">
+                  Register
                 </NavLink>
                 .
               </p>
@@ -66,12 +81,12 @@ class ForgotPassword extends Component {
                 <span className="logo-single" />
               </NavLink>
               <CardTitle className="mb-4">
-                <IntlMessages id="user.forgot-password" />
+                <IntlMessages id="user.register" />
               </CardTitle>
-
-              <Formik
-                initialValues={initialValues}
-                onSubmit={this.onForgotPassword}>
+              {this.state.errors && (
+                <p style={{ color: "red" }}>{this.state.errors}</p>
+              )}
+              <Formik initialValues={initialValues} onSubmit={this.onSubmit}>
                 {({ errors, touched }) => (
                   <Form className="av-tooltip tooltip-label-bottom">
                     <FormGroup className="form-group has-float-label">
@@ -89,14 +104,32 @@ class ForgotPassword extends Component {
                         </div>
                       )}
                     </FormGroup>
+                    <FormGroup className="form-group has-float-label">
+                      <Label>
+                        <IntlMessages id="user.password" />
+                      </Label>
+                      <Field
+                        className="form-control"
+                        type="password"
+                        name="password"
+                        validate={this.validatePassword}
+                      />
+                      {errors.password && touched.password && (
+                        <div className="invalid-feedback d-block">
+                          {errors.password}
+                        </div>
+                      )}
+                    </FormGroup>
 
                     <div className="d-flex justify-content-between align-items-center">
-                      <NavLink to={`/user/forgot-password`}>
+                      <NavLink to={`/organization/forgot-password`}>
                         <IntlMessages id="user.forgot-password-question" />
                       </NavLink>
                       <Button
                         color="primary"
-                        className={`btn-shadow btn-multiple-state ${this.props.loading ? "show-spinner" : ""}`}
+                        className={`btn-shadow btn-multiple-state ${
+                          this.props.loading ? "show-spinner" : ""
+                        }`}
                         size="lg"
                       >
                         <span className="spinner d-inline-block">
@@ -104,7 +137,9 @@ class ForgotPassword extends Component {
                           <span className="bounce2" />
                           <span className="bounce3" />
                         </span>
-                        <span className="label"><IntlMessages id="user.reset-password-button" /></span>
+                        <span className="label">
+                          <IntlMessages id="user.login-button" />
+                        </span>
                       </Button>
                     </div>
                   </Form>
@@ -118,4 +153,4 @@ class ForgotPassword extends Component {
   }
 }
 
-export default ForgotPassword
+export default Login;

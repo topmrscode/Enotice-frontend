@@ -50,7 +50,7 @@ export const clickOnMobileMenu = (strCurrentClasses) => {
     )
 }
 
-export const setContainerClassnames = (clickIndex, strCurrentClasses, selectedMenuHasSubItems) => {
+export const setContainerClassnames = (clickIndex, strCurrentClasses,selectedMenuHasSubItems) => {
     const currentClasses = strCurrentClasses ? strCurrentClasses.split(' ').filter(x => x !== '') : '';
     let nextClasses = '';
     if (!selectedMenuHasSubItems) {
