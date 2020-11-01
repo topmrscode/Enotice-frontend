@@ -210,7 +210,7 @@ class TopNav extends Component {
                 </DropdownItem>
                 <DropdownItem divider /> */}
                 <DropdownItem onClick={() => this.handleLogout()}>
-                  <IntlMessages id="menu.signout" />{" "}
+                  <IntlMessages id="menu.logout" />{" "}
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
