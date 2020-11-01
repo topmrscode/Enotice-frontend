@@ -9,11 +9,11 @@ export default class Home extends Component {
   }
 
   render() {
-    const me = auth_utils.is_authenticated().organization;
+    // const me = auth_utils.is_authenticated().organization;
     return (
       <Fragment>
         <Colxx xxs="12" className="mb-4">
-          <Row>{me}</Row>
+          <Row>hello</Row>
         </Colxx>
       </Fragment>
     );
