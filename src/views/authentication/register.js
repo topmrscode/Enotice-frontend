@@ -8,7 +8,9 @@ import { Formik, Form, Field } from "formik";
 import { Colxx } from "../../components/common/CustomBootstrap";
 import IntlMessages from "../../helpers/IntlMessages";
 
-import { login } from "../../requests/authentication";
+import { validateEmail, validatePassword, validateName } from "../../helpers/Validators";
+
+import { createOrganization } from "../../requests/organizations";
 import auth_utils from "../../helpers/Auth";
 
 export default class Register extends Component {
@@ -16,47 +18,48 @@ export default class Register extends Component {
     super(props);
     this.state = {
       error: null,
-      initialValues: { email: null, password: null },
+      initialValues: { email: null, password: null, name: null, password_confirm: null },
     };
   }
 
   onSubmit = async (values) => {
-    const response = await login(values);
+    const response = await createOrganization(values);
 
-    console.log(response);
     if (response.error != null) {
       this.setState({ error: response.error.message });
+      NotificationManager.error(
+        "Please try again with other credentials",
+        "Account creation failed !",
+        3000,
+        null,
+        null,
+        ""
+      );  
+      return ;
     }
 
     NotificationManager.success(
-      "You are now logged in.",
-      "Welcome back to your account !",
+      "Your can now use it and access to the platform",
+      "Account created !",
       3000,
       null,
       null,
       ""
     );
     auth_utils.authenticate(response.data);
-    this.props.history.push("/organization");
+    this.props.history.push("/auth/login");
   };
 
-  validateEmail = (value) => {
-    let error;
-    if (!value) {
-      error = "Please enter your email address";
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-      error = "Invalid email address";
-    }
-    return error;
-  };
 
-  validatePassword = (value) => {
-    let error;
-    if (!value) {
-      error = "Please enter your password";
+  validateRegisterForm = (values) => {
+    let error = {};
+    
+    if (values.password != values.password_confirm) {
+      error.password_confirm = "Passwords don't match"
     }
+
     return error;
-  };
+};
 
   render() {
     return (
@@ -65,27 +68,30 @@ export default class Register extends Component {
           <Card className="auth-card">
             <div className="position-relative image-side ">
               <p className="black mb-0">
-                <IntlMessages id="organization.login-side" />
+                <IntlMessages id="organization.register-side" />
                 <br />
-                <IntlMessages id="organization.login-side-sub" />
-                <NavLink to={`/register`}>
-                  <IntlMessages id="organization.login-side-link" />
+                <IntlMessages id="organization.register-side-sub" />
+                <NavLink to={`/auth/login`}>
+                  <IntlMessages id="organization.register-side-link" />
                 </NavLink>
               </p>
             </div>
             <div className="form-side">
               <span className="logo-single" />
               <CardTitle className="mb-4">
-                <IntlMessages id="organization.login-title" />
+                <IntlMessages id="organization.register-title" />
               </CardTitle>
               {this.state.error && (
                 <p style={{ color: "red" }}>{this.state.error}</p>
               )}
 
               <Formik
+                validate={this.validateRegisterForm}
                 initialValues={{
                   name: this.state.initialValues.email,
                   password: this.state.initialValues.password,
+                  name: this.state.initialValues.name,
+                  password_confirm: this.state.initialValues.password_confirm,
                 }}
                 onSubmit={this.onSubmit}
               >
@@ -98,11 +104,27 @@ export default class Register extends Component {
                       <Field
                         className="form-control"
                         name="email"
-                        validate={this.validateEmail}
+                        validate={validateEmail}
                       />
                       {errors.email && touched.email && (
                         <div className="invalid-feedback d-block">
                           {errors.email}
+                        </div>
+                      )}
+                    </FormGroup>
+                    <FormGroup className="form-group has-float-label">
+                      <Label>
+                        <IntlMessages id="organization.name" />
+                      </Label>
+                      <Field
+                        className="form-control"
+                        type="name"
+                        name="name"
+                        validate={validateName}
+                      />
+                      {errors.name && touched.name && (
+                        <div className="invalid-feedback d-block">
+                          {errors.name}
                         </div>
                       )}
                     </FormGroup>
@@ -114,11 +136,27 @@ export default class Register extends Component {
                         className="form-control"
                         type="password"
                         name="password"
-                        validate={this.validatePassword}
+                        validate={validatePassword}
                       />
                       {errors.password && touched.password && (
                         <div className="invalid-feedback d-block">
                           {errors.password}
+                        </div>
+                      )}
+                    </FormGroup>
+                    <FormGroup className="form-group has-float-label">
+                      <Label>
+                        <IntlMessages id="organization.password_confirm" />
+                      </Label>
+                      <Field
+                        className="form-control"
+                        type="password"
+                        name="password_confirm"
+                        validate={validatePassword}
+                      />
+                      {errors.password_confirm && touched.password_confirm && (
+                        <div className="invalid-feedback d-block">
+                          {errors.password_confirm}
                         </div>
                       )}
                     </FormGroup>
@@ -137,7 +175,7 @@ export default class Register extends Component {
                           <span className="bounce3" />
                         </span>
                         <span className="label">
-                          <IntlMessages id="organization.login-button" />
+                          <IntlMessages id="organization.register-button" />
                         </span>
                       </Button>
                     </div>

@@ -14,8 +14,6 @@ import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import IntlMessages from "../../helpers/IntlMessages";
 
-import { NotificationManager } from "../../components/common/react-notifications";
-
 import {
   setContainerClassnames,
   clickOnMobileMenu,
@@ -86,15 +84,6 @@ class TopNav extends Component {
 
   handleLogout = async () => {
     const response = await logout()
-
-    NotificationManager.success(
-      "",
-      "You are now logged out.",
-      3000,
-      null,
-      null,
-      ""
-    );
 
     auth_utils.clear_authentication();
     this.props.history.push("/auth/login");

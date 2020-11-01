@@ -5,6 +5,8 @@ import { NavLink } from "react-router-dom";
 import { NotificationManager } from "../../components/common/react-notifications";
 import { Formik, Form, Field } from "formik";
 
+import { validateEmail, validatePassword } from "../../helpers/Validators";
+
 import { Colxx } from "../../components/common/CustomBootstrap";
 import IntlMessages from "../../helpers/IntlMessages";
 
@@ -37,24 +39,6 @@ class Login extends Component {
     );
     auth_utils.authenticate(response.data);
     this.props.history.push("/organization");
-  };
-
-  validateEmail = (value) => {
-    let error;
-    if (!value) {
-      error = "Please enter your email address";
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-      error = "Invalid email address";
-    }
-    return error;
-  };
-
-  validatePassword = (value) => {
-    let error;
-    if (!value) {
-      error = "Please enter your password";
-    }
-    return error;
   };
 
   render() {
@@ -97,7 +81,7 @@ class Login extends Component {
                       <Field
                         className="form-control"
                         name="email"
-                        validate={this.validateEmail}
+                        validate={validateEmail}
                       />
                       {errors.email && touched.email && (
                         <div className="invalid-feedback d-block">
@@ -113,7 +97,7 @@ class Login extends Component {
                         className="form-control"
                         type="password"
                         name="password"
-                        validate={this.validatePassword}
+                        validate={validatePassword}
                       />
                       {errors.password && touched.password && (
                         <div className="invalid-feedback d-block">
