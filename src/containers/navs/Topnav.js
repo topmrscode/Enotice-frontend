@@ -5,7 +5,6 @@ import {
   DropdownItem,
   DropdownToggle,
   DropdownMenu,
-  Input,
 } from "reactstrap";
 
 import { logout } from "../../requests/authentication";
@@ -15,6 +14,8 @@ import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import IntlMessages from "../../helpers/IntlMessages";
 
+import { NotificationManager } from "../../components/common/react-notifications";
+
 import {
   setContainerClassnames,
   clickOnMobileMenu,
@@ -22,7 +23,6 @@ import {
 } from "../../redux/actions";
 
 import {
-  menuHiddenBreakpoint,
   localeOptions,
 } from "../../constants/defaultValues";
 
@@ -84,23 +84,21 @@ class TopNav extends Component {
 
   // DECONNECTION ET SUPPRESIION TOKEN --------------------
 
-  // handleLogout = () => {
-  //   const response = await logout()
-  //   if (response.error != null ){
-  //     MediaStreamError()
-  //   }
+  handleLogout = async () => {
+    const response = await logout()
 
-  //   logout().then(() => {
-  //     auth_utils.clear_authentication();
-  //     this.props.history.push("/auth/login");
-  //   });
-  // };
+    NotificationManager.success(
+      "",
+      "You are now logged out.",
+      3000,
+      null,
+      null,
+      ""
+    );
 
-  // REDIRECTION SETTING PAGE ------------------------------
-  // handleSettings = () => {
-  //   this.props.history.push("/schools/settings");
-  // };
-  // ---------------------------------------------------------
+    auth_utils.clear_authentication();
+    this.props.history.push("/auth/login");
+  };
 
   menuButtonClick = (e, menuClickCount, containerClassnames) => {
     e.preventDefault();
@@ -123,7 +121,6 @@ class TopNav extends Component {
 
   render() {
     const { containerClassnames, menuClickCount, locale } = this.props;
-    const { messages } = this.props.intl;
     const c_organization = auth_utils.is_authenticated();
 
     return (
@@ -207,15 +204,15 @@ class TopNav extends Component {
                   <img src="/assets/img/avatar.png" />
                 </span>
               </DropdownToggle>
-              {/* <DropdownMenu className="mt-3" right>
-                <DropdownItem onClick={() => this.handleSettings()}>
+              <DropdownMenu className="mt-3" right>
+                {/* <DropdownItem onClick={() => this.handleSettings()}>
                   <IntlMessages id="menu.settings" />{" "}
                 </DropdownItem>
-                <DropdownItem divider />
+                <DropdownItem divider /> */}
                 <DropdownItem onClick={() => this.handleLogout()}>
-                  <IntlMessages id="menu.signout" />{" "}
+                  <IntlMessages id="menu.logout" />{" "}
                 </DropdownItem>
-              </DropdownMenu> */}
+              </DropdownMenu>
             </UncontrolledDropdown>
           </div>
         </div>

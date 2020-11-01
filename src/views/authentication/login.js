@@ -23,7 +23,6 @@ class Login extends Component {
   onSubmit = async (values) => {
     const response = await login(values);
 
-    console.log(response);
     if (response.error != null) {
       this.setState({ error: response.error.message });
     }
@@ -114,9 +113,10 @@ class Login extends Component {
                       )}
                     </FormGroup>
                     <div className="d-flex justify-content-between align-items-center">
+                      <IntlMessages id="organization.forgot-password" />
                       <Button
                         color="primary"
-                        className={`btn-shadow btn-multiple-state ${
+                        className={`btn-shadow btn-multiple-state btn-square ${
                           this.props.loading ? "show-spinner" : ""
                         }`}
                         size="lg"

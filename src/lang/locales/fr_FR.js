@@ -23,9 +23,10 @@ module.exports = {
   "organization.fullname": "Nom",
   "organization.login-button": "SE CONNECTER",
   "organization.register-button": "CREER SON COMPTE",
-
+  "organization.forgot-password": "Mot de passe oublié ?",
   /* 03.Menu */
   "menu.dashboards": "Tableau de bord",
+  "menu.logout": "Se déconnecter",
 
   /* 04.Error Page */
   "pages.error-title": "Ooops... Il semble qu'une erreur soit survenue!",

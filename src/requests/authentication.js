@@ -19,16 +19,14 @@ const login = async (values) => {
 const logout = async () => {
   let token = auth_utils.is_authenticated().token;
   let response = await fetch(`${API_BASE_URL}/organizations/logout`, {
-    method: "POST",
+    method: "GET",
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(),
   });
 
-  return await response.json();
+  return;
 };
 
 const register = async (values) => {
