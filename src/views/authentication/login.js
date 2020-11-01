@@ -62,7 +62,16 @@ class Login extends Component {
       <Row className="h-100">
         <Colxx xs="12" md="10" className="mx-auto my-auto">
           <Card className="auth-card">
-            <div className="position-relative image-side "></div>
+            <div className="position-relative image-side ">
+              <p className="black mb-0">
+                <IntlMessages id="organization.login-side" />
+                <br />
+                <IntlMessages id="organization.login-side-sub" />
+                <NavLink to={`/register`}>
+                  <IntlMessages id="organization.login-side-link" />
+                </NavLink>
+              </p>
+            </div>
             <div className="form-side">
               <span className="logo-single" />
               <CardTitle className="mb-4">

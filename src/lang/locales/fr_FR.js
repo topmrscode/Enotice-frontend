@@ -23,7 +23,11 @@ module.exports = {
   "organization.fullname": "Nom",
   "organization.login-button": "SE CONNECTER",
   "organization.register-button": "CREER SON COMPTE",
-  "organization.forgot-password": "Mot de passe oublié ?",
+  "organization.login-side":
+    "Veuillez utiliser vos identifiants pour vous connecter.",
+  "organization.login-side-sub": "Vous n'avez pas de compte? ",
+  "organization.login-side-link": " créer un compte",
+
   /* 03.Menu */
   "menu.dashboards": "Tableau de bord",
   "menu.logout": "Se déconnecter",
