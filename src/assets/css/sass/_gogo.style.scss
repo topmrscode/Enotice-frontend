@@ -3950,7 +3950,6 @@ div[data-notify="container"] {
 
 .form-control:focus {
   background: $input-background;
-  color: $primary-color;
 }
 
 .bootstrap-tagsinput {
@@ -4899,7 +4898,6 @@ select.form-control:not([size]):not([multiple]) {
   line-height: 1.5;
   border: 1px solid $separator-color;
   background: $input-background;
-  color: $primary-color;
   height: initial;
 }
 

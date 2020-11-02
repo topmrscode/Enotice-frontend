@@ -29,18 +29,4 @@ const logout = async () => {
   return;
 };
 
-const register = async (values) => {
-  let response = await fetch(API_BASE_URL + "organizations", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ values }),
-  });
-  let parsedResponse = await response.json();
-
-  return parsedResponse;
-};
-
-export { login, register, logout };
+export { login, logout };

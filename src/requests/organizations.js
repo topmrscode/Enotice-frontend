@@ -14,4 +14,18 @@ const fetchCurrentOrganization = async () => {
   return await response.json();
 };
 
-export { fetchCurrentOrganization };
+const createOrganization = async (values) => {
+  let response = await fetch(API_BASE_URL + "/organizations", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(values),
+  });
+  let parsedResponse = await response.json();
+
+  return parsedResponse;
+};
+
+export { fetchCurrentOrganization, createOrganization };
