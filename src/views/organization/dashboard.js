@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Row } from "reactstrap";
-import auth_utils from "../../helpers/Auth";
 import { Colxx, Separator } from "../../components/common/CustomBootstrap";
+import IntlMessages from "../../helpers/IntlMessages";
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -11,9 +11,19 @@ export default class Dashboard extends Component {
   render() {
     return (
       <Fragment>
-        <Colxx xxs="12" className="mb-4">
-          <Row>Dashboard</Row>
-        </Colxx>
+        <Row>
+          <Colxx xxs="12">
+            <h1>
+              <IntlMessages id="menu.dashboard" />
+            </h1>
+            <Separator className="mb-5" />
+          </Colxx>
+        </Row>
+        <Row>
+          <Colxx xxs="12" className="mb-4">
+            <p>Dahboard</p>
+          </Colxx>
+        </Row>
       </Fragment>
     );
   }
