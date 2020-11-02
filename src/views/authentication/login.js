@@ -1,24 +1,27 @@
 import React, { Component } from "react";
-import { Row, Card, CardTitle, Label, FormGroup, Button } from "reactstrap";
+import { Row, Card, CardTitle } from "reactstrap";
+import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-
+import { LoginForm } from "../../components/form/LoginForm";
+import AppLocale from "../../lang";
 import { NotificationManager } from "../../components/common/react-notifications";
-import { Formik, Form, Field } from "formik";
-
-import { validateEmail, validatePassword } from "../../helpers/Validators";
-
 import { Colxx } from "../../components/common/CustomBootstrap";
 import IntlMessages from "../../helpers/IntlMessages";
-
 import { login } from "../../requests/authentication";
 import auth_utils from "../../helpers/Auth";
+import { REGEX_EMAIL } from "../../constants/utils";
 
 class Login extends Component {
   constructor(props) {
     super(props);
+
+    const { locale } = this.props;
+    const currentAppLocale = AppLocale[locale];
+
     this.state = {
       error: null,
       initialValues: { email: null, password: null },
+      currentAppLocale: currentAppLocale,
     };
   }
 
@@ -27,11 +30,14 @@ class Login extends Component {
 
     if (response.error != null) {
       this.setState({ error: response.error.message });
+      return;
     }
 
     NotificationManager.success(
-      "You are now logged in.",
-      "Welcome back to your account !",
+      this.state.currentAppLocale.messages["notifications.success-login-title"],
+      this.state.currentAppLocale.messages[
+        "notifications.success-login-content"
+      ],
       3000,
       null,
       null,
@@ -39,6 +45,24 @@ class Login extends Component {
     );
     auth_utils.authenticate(response.data);
     this.props.history.push("/organization");
+  };
+
+  validateEmail = (value) => {
+    let error;
+    if (!value) {
+      error = this.state.currentAppLocale.messages["errors.required-email"];
+    } else if (!REGEX_EMAIL.test(value)) {
+      error = this.state.currentAppLocale.messages["errors.invalid-email"];
+    }
+    return error;
+  };
+
+  validatePassword = (value) => {
+    let error;
+    if (!value) {
+      error = this.state.currentAppLocale.messages["errors.required-password"];
+    }
+    return error;
   };
 
   render() {
@@ -61,72 +85,16 @@ class Login extends Component {
               <CardTitle className="mb-4">
                 <IntlMessages id="organization.login-title" />
               </CardTitle>
-              {this.state.error && (
-                <p style={{ color: "red" }}>{this.state.error}</p>
-              )}
-
-              <Formik
-                initialValues={{
-                  name: this.state.initialValues.email,
-                  password: this.state.initialValues.password,
-                }}
+              <LoginForm
+                error={this.state.error}
+                initialValues={this.state.initialValues}
                 onSubmit={this.onSubmit}
-              >
-                {({ errors, touched }) => (
-                  <Form className="av-tooltip tooltip-label-bottom">
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="organization.email" />
-                      </Label>
-                      <Field
-                        className="form-control"
-                        name="email"
-                        validate={validateEmail}
-                      />
-                      {errors.email && touched.email && (
-                        <div className="invalid-feedback d-block">
-                          {errors.email}
-                        </div>
-                      )}
-                    </FormGroup>
-                    <FormGroup className="form-group has-float-label">
-                      <Label>
-                        <IntlMessages id="organization.password" />
-                      </Label>
-                      <Field
-                        className="form-control"
-                        type="password"
-                        name="password"
-                        validate={validatePassword}
-                      />
-                      {errors.password && touched.password && (
-                        <div className="invalid-feedback d-block">
-                          {errors.password}
-                        </div>
-                      )}
-                    </FormGroup>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <span />
-                      <Button
-                        color="primary"
-                        className={`btn-shadow btn-multiple-state btn-square ${
-                          this.props.loading ? "show-spinner" : ""
-                        }`}
-                        size="lg"
-                      >
-                        <span className="spinner d-inline-block">
-                          <span className="bounce1" />
-                          <span className="bounce2" />
-                          <span className="bounce3" />
-                        </span>
-                        <span className="label">
-                          <IntlMessages id="organization.login-button" />
-                        </span>
-                      </Button>
-                    </div>
-                  </Form>
-                )}
-              </Formik>
+                validators={{
+                  validateEmail: this.validateEmail,
+                  validatePassword: this.validatePassword,
+                }}
+                props={this.props}
+              />
             </div>
           </Card>
         </Colxx>
@@ -135,4 +103,10 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = ({ settings }) => {
+  const { locale } = settings;
+  return { locale };
+};
+const mapActionsToProps = {};
+
+export default connect(mapStateToProps, mapActionsToProps)(Login);

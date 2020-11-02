@@ -6,6 +6,8 @@ Table of Contents
 02.User Login, Logout, Register
 03.Menu
 04.Error Page
+05.Error in forms
+06.Notifications
 
 */
 
@@ -41,7 +43,19 @@ module.exports = {
   "pages.go-back-home": "GO BACK HOME",
 
   /* 05.Error in forms */
-  "errors.invalid_name": "Please enter a valid name",
-  "errors.invalid_password": "Please enter a valid password"
-  
+  "errors.required-email": "Please enter your email address",
+  "errors.required-name": "Please enter the organization name",
+  "errors.invalid-email": "Invalid email address",
+  "errors.invalid-password":
+    "Password must contain 8 characters, one uppercase, one lowercase, one Number and one special character",
+
+  "errors.required-password": "Please enter your password",
+  "errors.confirm-passwords": "Passwords don't match",
+
+  /* 06.notifications  */
+  "notifications.success-login-title": "You are now logged in.",
+  "notifications.success-login-content": "Welcome back to your account !",
+  "notifications.success-register-title":
+    "Your can now use it and access to the platform",
+  "notifications.success-register-content": "Account created !",
 };

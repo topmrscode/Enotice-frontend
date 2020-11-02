@@ -3670,7 +3670,7 @@ div[data-notify="container"] {
   border-radius: $border-radius;
   padding: 0.5rem 1rem;
   font-size: 0.76rem;
-  color: $primary-color;
+  color: rgba($secondary-color, 0.7);
   background: $foreground-color;
   border: 1px solid $theme-color-1;
   text-align: center;
@@ -4911,10 +4911,6 @@ select.form-control:not([size]):not([multiple]) {
 input:-webkit-autofill {
   animation-name: autofill;
   animation-fill-mode: both;
-}
-
-input:-webkit-autofill {
-  -webkit-text-fill-color: $primary-color !important;
 }
 
 .form-control-sm,
