@@ -37,7 +37,8 @@ module.exports = {
   "organization.register-side-link": " Se connecter",
 
   /* 03.Menu */
-  "menu.dashboards": "Tableau de bord",
+  "menu.dashboard": "Tableau de bord",
+  "menu.products": "Produits",
   "menu.logout": "Se déconnecter",
 
   /* 04.Error Page */
