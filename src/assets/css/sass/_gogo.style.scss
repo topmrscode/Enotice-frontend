@@ -5369,6 +5369,40 @@ input:-webkit-autofill {
   border-left-color: $foreground-color;
 }
 
+.print-only {
+  display: none;
+}
+
+@media print {
+  .print-only {
+    display: block;
+  }
+}
+
+.title-pdf {
+  font-style: bold;
+  font-size: 30px;
+  text-align: center;
+  transform: translate(50%, 0);
+}
+.center-qrcode {
+  margin-left: 50%;
+  margin-top: 25%;
+  transform: translate(-25%, 0);
+}
+
+.canvas-to-print {
+  margin-left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.print-instructions {
+  text-align: center;
+  font-style: italic;
+  color: $secondary-color;
+  padding-top: 15px;
+}
+
 .search-sm {
   position: relative;
 

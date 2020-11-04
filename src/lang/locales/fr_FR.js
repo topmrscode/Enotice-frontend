@@ -8,6 +8,8 @@ Table of Contents
 04.Error Page
 05.Error in forms
 06.Notifications
+07.Products
+08.Modals
 */
 
 module.exports = {
@@ -40,11 +42,14 @@ module.exports = {
   "menu.dashboard": "Tableau de bord",
   "menu.products": "Produits",
   "menu.logout": "Se déconnecter",
+  "menu.data-list": "Liste des produits",
 
   /* 04.Error Page */
   "pages.error-title": "Ooops... Il semble qu'une erreur soit survenue!",
   "pages.error-code": "Error code",
   "pages.go-back-home": "Retourner sur le site",
+  "pages.add-new": "Ajouter un produit",
+  "pages.delete": "Supprimer",
 
   /* 05.Error in forms */
   "errors.required-email": "Veuillez renseigner votre email",
@@ -61,4 +66,14 @@ module.exports = {
   "notifications.success-register-title":
     "Utilisez vos identifiants pour acceder à la plateforme.",
   "notifications.success-register-content": "Compte créé !",
+
+  /* 07.products  */
+  "products.generate-qrcode": "Générer le QRCode",
+  "products.print": "Imprimer",
+  "products.cancel": "Annuler",
+  "products.print-instructions":
+    "Pour sauvegarder le QRCode sous format PDF, cliquez sur le bouton 'Imprimer' et selectionner l'option 'imprimer sous format pdf' dans la nouvelle fenêtre. ",
+
+  /* 08.Modals  */
+  "modal.title-qrcode": " QRCode",
 };
