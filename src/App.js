@@ -14,6 +14,7 @@ import AuthRoute from "./helpers/AuthRoute";
 const ViewOrganization = React.lazy(() => import("./views/organization"));
 const ViewAuthenticaton = React.lazy(() => import("./views/authentication"));
 const ViewError = React.lazy(() => import("./views/error"));
+const ViewPublic = React.lazy(() => import("./views/public"));
 
 class App extends Component {
   constructor(props) {
@@ -49,6 +50,11 @@ class App extends Component {
                     path="/error"
                     exact
                     render={(props) => <ViewError {...props} />}
+                  />
+                  <Route
+                    path="/public/products/:id"
+                    exact
+                    render={(props) => <ViewPublic {...props} />}
                   />
                   <Redirect to="/auth/login" />
                 </Switch>

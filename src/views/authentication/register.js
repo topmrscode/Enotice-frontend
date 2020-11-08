@@ -21,10 +21,10 @@ class Register extends Component {
     this.state = {
       error: null,
       initialValues: {
-        email: null,
-        password: null,
-        name: null,
-        password_confirm: null,
+        email: "",
+        password: "",
+        name: "",
+        password_confirm: "",
       },
       currentAppLocale: currentAppLocale,
     };

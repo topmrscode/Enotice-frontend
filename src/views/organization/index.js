@@ -5,6 +5,7 @@ import AppLayout from "../../layout/AppLayout";
 
 const Dashboard = React.lazy(() => import("./Dashboard"));
 const Products = React.lazy(() => import("./Products"));
+const ProductDetails = React.lazy(() => import("./ProductDetails"));
 
 class App extends Component {
   render() {
@@ -19,6 +20,11 @@ class App extends Component {
                 exact
                 path={`${match.url}/`}
                 render={(props) => <Dashboard {...props} />}
+              />
+              <Route
+                exact
+                path={`${match.url}/products/:product_id`}
+                render={(props) => <ProductDetails {...props} />}
               />
               <Route
                 exact

@@ -8,6 +8,8 @@ Table of Contents
 04.Error Page
 05.Error in forms
 06.Notifications
+07.Products
+08.Modals
 
 */
 
@@ -36,12 +38,15 @@ module.exports = {
   "menu.dashboard": "Dashboard",
   "menu.products": "Products",
   "menu.logout": "Logout",
+  "menu.data-list": "Products list",
 
   /* 04.Error page */
 
   "pages.error-title": "Ooops... looks like an error occurred!",
   "pages.error-code": "Error code",
   "pages.go-back-home": "GO BACK HOME",
+  "pages.add-new": "Add a product",
+  "pages.delete": "Remove",
 
   /* 05.Error in forms */
   "errors.required-email": "Please enter your email address",
@@ -53,10 +58,31 @@ module.exports = {
   "errors.required-password": "Please enter your password",
   "errors.confirm-passwords": "Passwords don't match",
 
-  /* 06.notifications  */
+  /* 06.Notifications  */
   "notifications.success-login-title": "You are now logged in.",
   "notifications.success-login-content": "Welcome back to your account !",
   "notifications.success-register-title":
     "Your can now use it and access to the platform",
   "notifications.success-register-content": "Account created !",
+  "notifications.success-create-product-title":
+    "You can see the details of your product, edit it or remove it",
+  "notifications.success-create-product-content": "Product created !",
+  "notifications.success-edit-product-title":
+    "Your product has been edited with success",
+  "notifications.success-edit-product-content": "Product edited !",
+
+  /* 07.Products  */
+  "products.generate-qrcode": "Generate QRCode",
+  "products.print": "Print",
+  "products.cancel": "Cancel",
+  "products.print-instructions":
+    "To save a QRCode pdf version, click on the 'Print' button and select 'print as pdf option' in the new window.",
+  "products.create-title": "Add new product",
+  "products.add-reference": "Reference",
+  "products.add-videoId": "Video id",
+  "products.add-fileUrl": "File url",
+  "products.add-submit": "Add product",
+
+  /* 08.Modals  */
+  "modal.title-qrcode": " QRCode",
 };

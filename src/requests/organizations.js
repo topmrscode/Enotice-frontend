@@ -15,7 +15,7 @@ const fetchCurrentOrganization = async () => {
 };
 
 const createOrganization = async (values) => {
-  let response = await fetch(API_BASE_URL + "/organizations", {
+  let response = await fetch(`${API_BASE_URL}/organizations`, {
     method: "POST",
     headers: {
       Accept: "application/json",
