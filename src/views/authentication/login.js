@@ -20,7 +20,7 @@ class Login extends Component {
 
     this.state = {
       error: null,
-      initialValues: { email: null, password: null },
+      initialValues: { email: "", password: "" },
       currentAppLocale: currentAppLocale,
     };
   }

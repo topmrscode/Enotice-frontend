@@ -9,7 +9,6 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  CardTitle,
   ModalFooter,
 } from "reactstrap";
 import AppLocale from "../../lang";
@@ -50,7 +49,7 @@ class ProductDetails extends Component {
 
     this.state = {
       modal: false,
-      isLoading: false,
+      isLoading: true,
       product: null,
       errors: null,
       display: false,
@@ -67,7 +66,7 @@ class ProductDetails extends Component {
     }
     this.setState({
       product: response.data,
-      isLoading: true,
+      isLoading: false,
     });
   }
 
@@ -82,7 +81,7 @@ class ProductDetails extends Component {
     if (errors) {
       return <div>{errors}</div>;
     }
-    return !this.state.isLoading ? (
+    return this.state.isLoading ? (
       <div className="loading" />
     ) : (
       <Fragment>
@@ -94,82 +93,69 @@ class ProductDetails extends Component {
         </Row>
         <Row>
           <Colxx md="6" className="mb-4">
-            <Card className="mb-4">
-              <CardTitle>Video</CardTitle>
-              <CardBody>
-                <iframe
-                  width="100%"
-                  height="500"
-                  src={`https://www.youtube.com/embed/${product.videoId}`}
-                />
+            <iframe
+              width="100%"
+              height="500"
+              src={`https://www.youtube.com/embed/${product.videoId}`}
+            />
 
-                <Button color="primary" outline onClick={this.toggle}>
-                  <IntlMessages id="products.generate-qrcode" />
+            <Button color="primary" outline onClick={this.toggle}>
+              <IntlMessages id="products.generate-qrcode" />
+            </Button>
+            <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle}>
+              <ModalHeader toggle={this.toggle}>
+                {product.reference}
+                <IntlMessages id="modal.title-qrcode" />
+              </ModalHeader>
+              <ModalBody>
+                <QRCode
+                  className="canvas-to-print"
+                  size={150}
+                  value={`http://localhost:3000/public/products/${product._id}`}
+                />
+                <ComponentToPrint
+                  product={product}
+                  ref={(el) => (this.componentRef = el)}
+                />
+                <p className="print-instructions">
+                  {
+                    this.state.currentAppLocale.messages[
+                      "products.print-instructions"
+                    ]
+                  }
+                  ,
+                </p>
+              </ModalBody>
+              <ModalFooter>
+                <ReactToPrint content={() => this.componentRef}>
+                  <PrintContextConsumer>
+                    {({ handlePrint }) => (
+                      <Button
+                        className="btn-square"
+                        color="primary"
+                        onClick={handlePrint}
+                      >
+                        <IntlMessages id="products.print" />
+                      </Button>
+                    )}
+                  </PrintContextConsumer>
+                </ReactToPrint>
+                <Button
+                  className="btn-square"
+                  color="secondary"
+                  onClick={this.toggle}
+                >
+                  <IntlMessages id="products.cancel" />
                 </Button>
-                <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle}>
-                  <ModalHeader toggle={this.toggle}>
-                    {product.reference}
-                    <IntlMessages id="modal.title-qrcode" />
-                  </ModalHeader>
-                  <ModalBody>
-                    <QRCode
-                      className="canvas-to-print"
-                      size={150}
-                      value={`http://localhost:3000/public/products/${product._id}`}
-                    />
-                    <ComponentToPrint
-                      product={product}
-                      ref={(el) => (this.componentRef = el)}
-                    />
-                    <p className="print-instructions">
-                      {
-                        this.state.currentAppLocale.messages[
-                          "products.print-instructions"
-                        ]
-                      }
-                      ,
-                    </p>
-                  </ModalBody>
-                  <ModalFooter>
-                    <ReactToPrint content={() => this.componentRef}>
-                      <PrintContextConsumer>
-                        {({ handlePrint }) => (
-                          <Button
-                            className="btn-square"
-                            color="primary"
-                            onClick={handlePrint}
-                          >
-                            <IntlMessages id="products.print" />
-                          </Button>
-                        )}
-                      </PrintContextConsumer>
-                    </ReactToPrint>
-                    <Button
-                      className="btn-square"
-                      color="secondary"
-                      onClick={this.toggle}
-                    >
-                      <IntlMessages id="products.cancel" />
-                    </Button>
-                  </ModalFooter>
-                </Modal>
-              </CardBody>
-            </Card>
+              </ModalFooter>
+            </Modal>
           </Colxx>
           <Colxx md="6" className="mb-4">
-            <Card className="mb-4">
-              <CardTitle>
-                {" "}
-                <IntlMessages id="modal.nested-modal" />
-              </CardTitle>
-              <CardBody>
-                <iframe
-                  src={`${product.fileUrl}`}
-                  style={{ width: "100%", height: "500px" }}
-                  frameborder="0"
-                />
-              </CardBody>
-            </Card>
+            <iframe
+              src={`${product.fileUrl}`}
+              style={{ width: "100%", height: "500px" }}
+              frameborder="0"
+            />
           </Colxx>
         </Row>
       </Fragment>

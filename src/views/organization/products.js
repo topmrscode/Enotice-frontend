@@ -4,13 +4,12 @@ import { Row } from "reactstrap";
 import ProductList from "../../components/pages/ProductList";
 import Pagination from "../../components/common/Pagination";
 import ListPageHeading from "../../components/pages/ListPageHeading";
-// import AddNewModal from "../../../../containers/pages/AddNewModal";
+import AddProduct from "../../components/pages/AddProduct";
 import { listProducts } from "../../requests/products";
 
 class Products extends Component {
   constructor(props) {
     super(props);
-    this.mouseTrap = require("mousetrap");
 
     this.state = {
       selectedPageSize: 10,
@@ -23,18 +22,20 @@ class Products extends Component {
       totalPage: 1,
       selectedItems: [],
       lastChecked: null,
-      isLoading: false,
+      isLoading: true,
+      error: null,
     };
+    this.forceRefreshProduct = this.forceRefreshProduct.bind(this);
   }
   componentDidMount() {
     this.dataListRender();
   }
 
-  // toggleModal = () => {
-  //   this.setState({
-  //     modalOpen: !this.state.modalOpen,
-  //   });
-  // };
+  toggleModal = () => {
+    this.setState({
+      modalOpen: !this.state.modalOpen,
+    });
+  };
 
   changePageSize = (size) => {
     this.setState(
@@ -124,15 +125,21 @@ class Products extends Component {
     const { selectedPageSize, currentPage } = this.state;
     const offset = (currentPage - 1) * selectedPageSize;
     const response = await listProducts(offset, selectedPageSize);
-    // gestion erreurs !!!!!!
-    console.log(response);
+    if (response.error != null) {
+      this.setState({ error: response.error.message });
+    }
     this.setState({
       totalPage: Math.ceil(response.data.total / selectedPageSize),
       items: response.data.products,
       selectedItems: [],
       totalItemCount: response.data.total,
-      isLoading: true,
+      isLoading: false,
     });
+  }
+
+  forceRefreshProduct() {
+    this.setState({ currentPage: 1 });
+    this.dataListRender();
   }
 
   render() {
@@ -143,13 +150,16 @@ class Products extends Component {
       totalItemCount,
       selectedItems,
       pageSizes,
-      // modalOpen,
+      modalOpen,
     } = this.state;
     const { match } = this.props;
     const startIndex = (currentPage - 1) * selectedPageSize;
     const endIndex = currentPage * selectedPageSize;
 
-    return !this.state.isLoading ? (
+    if (this.state.error) {
+      return <div>{this.state.error}</div>;
+    }
+    return this.state.isLoading ? (
       <div className="loading" />
     ) : (
       <Fragment>
@@ -166,13 +176,13 @@ class Products extends Component {
             selectedItemsLength={selectedItems ? selectedItems.length : 0}
             itemsLength={items ? items.length : 0}
             pageSizes={pageSizes}
-            // toggleModal={this.toggleModal}
+            toggleModal={this.toggleModal}
           />
-          {/* <AddNewModal
+          <AddProduct
+            refreshProducts={this.forceRefreshProduct}
             modalOpen={modalOpen}
             toggleModal={this.toggleModal}
-            categories={categories}
-          /> */}
+          />
           <Row>
             {this.state.items.map((product) => {
               return (

@@ -42,13 +42,12 @@ class ListPageHeading extends Component {
       changePageSize,
       selectedPageSize,
       totalItemCount,
-      match,
       startIndex,
       endIndex,
       selectedItemsLength,
       itemsLength,
       pageSizes,
-      //   toggleModal,
+      toggleModal,
       heading,
     } = this.props;
 
@@ -66,7 +65,7 @@ class ListPageHeading extends Component {
                 color="primary"
                 size="lg"
                 className="top-right-button btn-square"
-                // onClick={() => toggleModal()}
+                onClick={() => toggleModal()}
               >
                 <IntlMessages id="pages.add-new" />
               </Button>

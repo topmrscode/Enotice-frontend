@@ -66,6 +66,12 @@ module.exports = {
   "notifications.success-register-title":
     "Utilisez vos identifiants pour acceder à la plateforme.",
   "notifications.success-register-content": "Compte créé !",
+  "notifications.success-create-product-title":
+    "Vous pouvez consulter les details de votre produit, le modifier ou le supprimer.",
+  "notifications.success-create-product-content": "Produit créé !",
+  "notifications.success-edit-product-title":
+    "Votre produit a bien été modifié",
+  "notifications.success-edit-product-content": "Produit modifié !",
 
   /* 07.products  */
   "products.generate-qrcode": "Générer le QRCode",
@@ -73,6 +79,11 @@ module.exports = {
   "products.cancel": "Annuler",
   "products.print-instructions":
     "Pour sauvegarder le QRCode sous format PDF, cliquez sur le bouton 'Imprimer' et selectionner l'option 'imprimer sous format pdf' dans la nouvelle fenêtre. ",
+  "products.create-title": "Ajouter un produit",
+  "products.add-reference": "Réfêrence du produit",
+  "products.add-videoId": "Id de la notice video",
+  "products.add-fileUrl": "Lien url de la notice pdf",
+  "products.add-submit": "Ajouter",
 
   /* 08.Modals  */
   "modal.title-qrcode": " QRCode",
