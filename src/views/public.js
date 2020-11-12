@@ -59,7 +59,7 @@ class Public extends Component {
                 </Colxx>
                 <Colxx md="6" className="mb-4">
                   <iframe
-                    src={`${product.fileUrl}`}
+                    src={`${product.file}`}
                     style={{ width: "100%", height: "500px" }}
                     frameborder="0"
                   />

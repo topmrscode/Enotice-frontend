@@ -10,6 +10,7 @@ Table of Contents
 06.Notifications
 07.Products
 08.Modals
+09.Dashboard
 */
 
 module.exports = {
@@ -54,6 +55,9 @@ module.exports = {
   /* 05.Error in forms */
   "errors.required-email": "Veuillez renseigner votre email",
   "errors.required-name": "Veuillez renseigner le nom de l'organization",
+  "errors.required-reference": "Veuillez renseigner la référence du produit",
+  "errors.required-videId":
+    "Veuillez renseigner l'id ou le l'url de la video Youtube | lien url : https://www.youtube.com/watch?v=iXmk4defRiY ou id : iXmk4defRiY ",
   "errors.invalid-email": "adresse email invalide",
   "errors.required-password": "Veuillez renseigner un mot de passe",
   "errors.invalid-password":
@@ -82,9 +86,13 @@ module.exports = {
   "products.create-title": "Ajouter un produit",
   "products.add-reference": "Réfêrence du produit",
   "products.add-videoId": "Id de la notice video",
-  "products.add-fileUrl": "Lien url de la notice pdf",
+  "products.add-file": "Notice pdf",
   "products.add-submit": "Ajouter",
+  "products.edit": "Modifier le produit",
 
   /* 08.Modals  */
   "modal.title-qrcode": " QRCode",
+
+  /* 09.Dashboard  */
+  "dashboards.products": "Produits",
 };

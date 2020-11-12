@@ -55,7 +55,7 @@ export function LoginForm({
               <span />
               <Button
                 color="primary"
-                className={`btn-shadow btn-multiple-state btn-square ${
+                className={`btn-shadow btn-multiple-state default mb-2  ${
                   props.loading ? "show-spinner" : ""
                 }`}
                 size="lg"

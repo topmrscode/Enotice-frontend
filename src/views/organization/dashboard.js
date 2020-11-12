@@ -2,14 +2,37 @@ import React, { Component, Fragment } from "react";
 import { Row } from "reactstrap";
 import { Colxx, Separator } from "../../components/common/CustomBootstrap";
 import IntlMessages from "../../helpers/IntlMessages";
+import { injectIntl } from "react-intl";
+import DashboardCard from "../../components/cards/DashboardCard";
+import { listProducts } from "../../requests/products";
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      total: null,
+      isLoading: true,
+      error: null,
+    };
+  }
+  async componentDidMount() {
+    const response = await listProducts();
+    if (response.error != null) {
+      this.setState({ error: response.error.message });
+      return;
+    }
+    this.setState({ total: response.data.total, isLoading: false });
   }
 
   render() {
-    return (
+    const { messages } = this.props.intl;
+
+    if (this.state.error) {
+      return <div>{this.state.error}</div>;
+    }
+    return this.state.isLoading ? (
+      <div className="loading" />
+    ) : (
       <Fragment>
         <Row>
           <Colxx xxs="12">
@@ -20,11 +43,17 @@ export default class Dashboard extends Component {
           </Colxx>
         </Row>
         <Row>
-          <Colxx xxs="12" className="mb-4">
-            <p>Dahboard</p>
+          <Colxx lg="4" md="6" className="mb-4">
+            <DashboardCard
+              icon="iconsminds-clock"
+              title={`${this.state.total} ${messages["dashboards.products"]}`}
+              detail={messages["dashboards.view-products"]}
+            />
           </Colxx>
         </Row>
       </Fragment>
     );
   }
 }
+
+export default injectIntl(Dashboard);

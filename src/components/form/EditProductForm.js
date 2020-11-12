@@ -3,7 +3,7 @@ import { Label, FormGroup } from "reactstrap";
 import { Formik, Form, Field } from "formik";
 import IntlMessages from "../../helpers/IntlMessages";
 
-export default function AddProductForm({
+export default function EditProductForm({
   onSubmit: handleSubmit,
   error,
   initialValues,
@@ -15,12 +15,14 @@ export default function AddProductForm({
   useEffect(() => {
     setRef(specialRef);
   }, [specialRef]);
+
   return (
     <div>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <Formik
         ref={specialRef}
         initialValues={{
+          file: initialValues.file,
           reference: initialValues.reference,
           videoId: initialValues.videoId,
         }}

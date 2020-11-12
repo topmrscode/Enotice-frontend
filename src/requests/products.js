@@ -41,18 +41,61 @@ const fetchPublicProduct = async (id) => {
   return await response.json();
 };
 
-const saveProduct = async (values) => {
+const saveProduct = async (values, file) => {
+  // upload
+  const data = new FormData();
+  data.append("file", file);
+  data.append("reference", values.reference);
+  data.append("videoId", values.videoId);
+
   let token = auth_utils.is_authenticated().token;
   let response = await fetch(`${API_BASE_URL}/products`, {
     method: "POST",
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(values),
+    body: data,
   });
   return await response.json();
 };
 
-export { listProducts, fetchProduct, fetchPublicProduct, saveProduct };
+const editProduct = async (values, file, id) => {
+  // upload
+  const data = new FormData();
+  data.append("file", file);
+  data.append("reference", values.reference);
+  data.append("videoId", values.videoId);
+
+  let token = auth_utils.is_authenticated().token;
+  let response = await fetch(`${API_BASE_URL}/products/${id}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: data,
+  });
+  return await response.json();
+};
+
+const removeProduct = async (id) => {
+  let token = auth_utils.is_authenticated().token;
+  await fetch(`${API_BASE_URL}/products/${id}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export {
+  listProducts,
+  fetchProduct,
+  fetchPublicProduct,
+  saveProduct,
+  removeProduct,
+  editProduct,
+};

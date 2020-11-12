@@ -10,6 +10,7 @@ Table of Contents
 06.Notifications
 07.Products
 08.Modals
+09.Dashboard
 
 */
 
@@ -51,10 +52,12 @@ module.exports = {
   /* 05.Error in forms */
   "errors.required-email": "Please enter your email address",
   "errors.required-name": "Please enter the organization name",
+  "errors.required-reference": "Please enter the product reference",
+  "errors.required-videId":
+    "Please enter the youtube video id or url | url link : https://www.youtube.com/watch?v=iXmk4defRiY or video id : iXmk4defRiY ",
   "errors.invalid-email": "Invalid email address",
   "errors.invalid-password":
     "Password must contain 8 characters, one uppercase, one lowercase, one Number and one special character",
-
   "errors.required-password": "Please enter your password",
   "errors.confirm-passwords": "Passwords don't match",
 
@@ -80,9 +83,13 @@ module.exports = {
   "products.create-title": "Add new product",
   "products.add-reference": "Reference",
   "products.add-videoId": "Video id",
-  "products.add-fileUrl": "File url",
+  "products.add-file": "File",
   "products.add-submit": "Add product",
+  "products.edit": "Edit product",
 
   /* 08.Modals  */
   "modal.title-qrcode": " QRCode",
+
+  /* 09.Dashboard  */
+  "dashboards.products": "Products",
 };

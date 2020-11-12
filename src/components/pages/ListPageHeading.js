@@ -49,6 +49,7 @@ class ListPageHeading extends Component {
       pageSizes,
       toggleModal,
       heading,
+      onRemove,
     } = this.props;
 
     const { displayOptionsIsOpen, dropdownSplitOpen } = this.state;
@@ -64,7 +65,7 @@ class ListPageHeading extends Component {
               <Button
                 color="primary"
                 size="lg"
-                className="top-right-button btn-square"
+                className="top-right-button default mb-2"
                 onClick={() => toggleModal()}
               >
                 <IntlMessages id="pages.add-new" />
@@ -74,7 +75,7 @@ class ListPageHeading extends Component {
                 isOpen={dropdownSplitOpen}
                 toggle={this.toggleSplit}
               >
-                <div className="btn btn-primary btn-lg pl-4 pr-0 check-button check-all btn-square">
+                <div className="btn btn-primary btn-lg pl-4 pr-0 check-button check-all default mb-2">
                   <CustomInput
                     className="custom-checkbox mb-0 d-inline-block"
                     type="checkbox"
@@ -96,10 +97,10 @@ class ListPageHeading extends Component {
                 <DropdownToggle
                   caret
                   color="primary"
-                  className="dropdown-toggle-split btn-lg btn-square"
+                  className="dropdown-toggle-split btn-lg default mb-2"
                 />
                 <DropdownMenu right>
-                  <DropdownItem>
+                  <DropdownItem onClick={() => onRemove()}>
                     <IntlMessages id="pages.delete" />
                   </DropdownItem>
                 </DropdownMenu>
@@ -110,7 +111,7 @@ class ListPageHeading extends Component {
           <div className="mb-2">
             <Button
               color="empty"
-              className="pt-0 pl-0 d-inline-block d-md-none "
+              className="pt-0 pl-0 d-inline-block d-md-none same-width-btn "
               onClick={this.toggleDisplayOptions}
             >
               <IntlMessages id="pages.display-options" />{" "}
@@ -124,7 +125,7 @@ class ListPageHeading extends Component {
               <div className="d-block d-md-inline-block pt-1">
                 <div className="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
                   <input
-                    className="btn-square"
+                    className="default mb-2"
                     disabled
                     type="text"
                     name="keyword"
@@ -138,7 +139,7 @@ class ListPageHeading extends Component {
                 <span className="text-muted text-small mr-1">{`${startIndex}-${endIndex} of ${totalItemCount} `}</span>
                 <UncontrolledDropdown className="d-inline-block ">
                   <DropdownToggle
-                    className="btn-square"
+                    className="default mb-2"
                     caret
                     color="outline-dark"
                     size="xs"

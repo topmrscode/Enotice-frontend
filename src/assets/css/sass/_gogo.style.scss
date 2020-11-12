@@ -519,7 +519,7 @@ p {
 }
 
 .text-secondary {
-  color: $primary-color !important;
+  color: $theme-color-2 !important;
 }
 
 .main-heading {
@@ -567,6 +567,10 @@ button {
   outline: initial !important;
 }
 
+.same-width-btn {
+  width: 10rem;
+}
+
 .btn-arrow {
   display: inline-block;
   text-align: center;
@@ -601,10 +605,6 @@ button {
   font-size: 0.8rem;
   padding: 0.75rem 1.3rem 0.6rem 1.3rem;
   transition: background-color box-shadow 0.1s linear;
-}
-
-.btn-square {
-  border-radius: 2px !important;
 }
 
 .btn-shadow {
@@ -5674,15 +5674,9 @@ input:-webkit-autofill {
 
 .progress-banner {
   height: 200px;
-  background-image: linear-gradient(
-    to right top,
-    $gradient-color-2,
-    $gradient-color-3,
-    $gradient-color-1
-  );
   transition: 0.5s;
   background-size: 200% auto;
-  cursor: pointer;
+  // cursor: pointer;
 
   .CircularProgressbar .CircularProgressbar-text {
     fill: $button-text-color !important;

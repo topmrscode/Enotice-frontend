@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import ReactToPrint, { PrintContextConsumer } from "react-to-print";
 import { connect } from "react-redux";
+import QRCode from "qrcode.react";
 import {
   Row,
   Button,
@@ -11,11 +12,12 @@ import {
   ModalBody,
   ModalFooter,
 } from "reactstrap";
+import EditProduct from "../../components/pages/EditProduct";
 import AppLocale from "../../lang";
 import { Colxx, Separator } from "../../components/common/CustomBootstrap";
 import IntlMessages from "../../helpers/IntlMessages";
 import { fetchProduct } from "../../requests/products";
-import QRCode from "qrcode.react";
+import DetailsPageHeading from "../../components/pages/DetailsPageHeading";
 
 class ComponentToPrint extends Component {
   constructor(props) {
@@ -53,8 +55,10 @@ class ProductDetails extends Component {
       product: null,
       errors: null,
       display: false,
+      modalOpen: false,
       currentAppLocale: currentAppLocale,
     };
+    this.forceRefreshProduct = this.forceRefreshProduct.bind(this);
   }
 
   async componentDidMount() {
@@ -70,11 +74,30 @@ class ProductDetails extends Component {
     });
   }
 
-  toggle = () => {
+  toggleModalGenearateQRcode = () => {
     this.setState((prevState) => ({
       modal: !prevState.modal,
     }));
   };
+
+  toggleModalEditProduct = () => {
+    this.setState({
+      modalOpen: !this.state.modalOpen,
+    });
+  };
+
+  async forceRefreshProduct() {
+    const productId = this.state.product._id;
+    const response = await fetchProduct(productId);
+    if (response.error != null) {
+      this.setState({ errors: response.error.message });
+      return;
+    }
+    this.setState({
+      product: response.data,
+      isLoading: false,
+    });
+  }
 
   render() {
     const { product, errors, display } = this.state;
@@ -85,12 +108,20 @@ class ProductDetails extends Component {
       <div className="loading" />
     ) : (
       <Fragment>
-        <Row>
-          <Colxx xxs="12">
-            <h1>{product.reference}</h1>
-            <Separator className="mb-5" />
-          </Colxx>
-        </Row>
+        <DetailsPageHeading
+          heading={product.reference}
+          toggleModal={{
+            generateQRcode: this.toggleModalGenearateQRcode,
+            editProduct: this.toggleModalEditProduct,
+          }}
+        />
+        <EditProduct
+          refreshProduct={this.forceRefreshProduct}
+          product={this.state.product}
+          initialValues={this.state.product}
+          modalOpen={this.state.modalOpen}
+          toggleModal={this.toggleModalEditProduct}
+        />
         <Row>
           <Colxx md="6" className="mb-4">
             <iframe
@@ -98,10 +129,6 @@ class ProductDetails extends Component {
               height="500"
               src={`https://www.youtube.com/embed/${product.videoId}`}
             />
-
-            <Button color="primary" outline onClick={this.toggle}>
-              <IntlMessages id="products.generate-qrcode" />
-            </Button>
             <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle}>
               <ModalHeader toggle={this.toggle}>
                 {product.reference}
@@ -127,11 +154,18 @@ class ProductDetails extends Component {
                 </p>
               </ModalBody>
               <ModalFooter>
+                <Button
+                  className="default mb-2 same-width-btn"
+                  color="secondary"
+                  onClick={this.toggleModalGenearateQRcode}
+                >
+                  <IntlMessages id="products.cancel" />
+                </Button>
                 <ReactToPrint content={() => this.componentRef}>
                   <PrintContextConsumer>
                     {({ handlePrint }) => (
                       <Button
-                        className="btn-square"
+                        className="default mb-2 same-width-btn"
                         color="primary"
                         onClick={handlePrint}
                       >
@@ -140,19 +174,12 @@ class ProductDetails extends Component {
                     )}
                   </PrintContextConsumer>
                 </ReactToPrint>
-                <Button
-                  className="btn-square"
-                  color="secondary"
-                  onClick={this.toggle}
-                >
-                  <IntlMessages id="products.cancel" />
-                </Button>
               </ModalFooter>
             </Modal>
           </Colxx>
           <Colxx md="6" className="mb-4">
             <iframe
-              src={`${product.fileUrl}`}
+              src={`${product.file}`}
               style={{ width: "100%", height: "500px" }}
               frameborder="0"
             />

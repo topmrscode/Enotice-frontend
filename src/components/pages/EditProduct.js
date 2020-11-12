@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { saveProduct } from "../../requests/products";
+import { editProduct } from "../../requests/products";
 import { NotificationManager } from "../common/react-notifications";
 import AppLocale from "../../lang";
-import AddProductForm from "../form/AddProductForm";
+import EditProductForm from "../form/EditProductForm";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import IntlMessages from "../../helpers/IntlMessages";
 
-class AddProduct extends Component {
+class EditProduct extends Component {
   constructor(props) {
     super(props);
 
@@ -23,31 +23,36 @@ class AddProduct extends Component {
       ref: null,
       error: null,
       currentAppLocale: currentAppLocale,
-      initialValues: { reference: "", videoId: "" },
       file: null,
     };
   }
 
   onSubmit = async (values) => {
-    const response = await saveProduct(values, this.state.file);
+    this.setState({ error: null });
+    const response = await editProduct(
+      values,
+      this.state.file,
+      this.props.product._id
+    );
     if (response.error != null) {
       this.setState({ error: response.error.message });
       return;
     }
 
-    this.props.refreshProducts();
+    this.props.refreshProduct();
     NotificationManager.success(
       this.state.currentAppLocale.messages[
-        "notifications.success-create-product-title"
+        "notifications.success-edit-product-title"
       ],
       this.state.currentAppLocale.messages[
-        "notifications.success-create-product-content"
+        "notifications.success-edit-product-content"
       ],
       3000,
       null,
       null,
       ""
     );
+    this.setState({ file: null });
     this.state.toggleModal();
   };
 
@@ -84,7 +89,7 @@ class AddProduct extends Component {
 
   render() {
     const ref = React.createRef();
-    const { toggleModal, modalOpen } = this.props;
+    const { toggleModal, modalOpen, initialValues } = this.props;
 
     return (
       <Modal
@@ -94,12 +99,12 @@ class AddProduct extends Component {
         backdrop="static"
       >
         <ModalHeader toggle={toggleModal}>
-          <IntlMessages id="products.create-title" />
+          <IntlMessages id="products.edit" />
         </ModalHeader>
         <ModalBody>
-          <AddProductForm
+          <EditProductForm
             error={this.state.error}
-            initialValues={this.state.initialValues}
+            initialValues={initialValues}
             setRef={this.setRef}
             onSubmit={this.onSubmit}
             validators={{
@@ -122,7 +127,7 @@ class AddProduct extends Component {
             color="primary"
             onClick={this.handleSubmit}
           >
-            <IntlMessages id="products.add-submit" />
+            <IntlMessages id="products.edit" />
           </Button>
         </ModalFooter>
       </Modal>
@@ -136,4 +141,4 @@ const mapStateToProps = ({ settings }) => {
 };
 const mapActionsToProps = {};
 
-export default connect(mapStateToProps, mapActionsToProps)(AddProduct);
+export default connect(mapStateToProps, mapActionsToProps)(EditProduct);

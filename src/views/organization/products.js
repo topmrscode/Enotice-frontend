@@ -5,7 +5,7 @@ import ProductList from "../../components/pages/ProductList";
 import Pagination from "../../components/common/Pagination";
 import ListPageHeading from "../../components/pages/ListPageHeading";
 import AddProduct from "../../components/pages/AddProduct";
-import { listProducts } from "../../requests/products";
+import { listProducts, removeProduct } from "../../requests/products";
 
 class Products extends Component {
   constructor(props) {
@@ -26,6 +26,7 @@ class Products extends Component {
       error: null,
     };
     this.forceRefreshProduct = this.forceRefreshProduct.bind(this);
+    this.onRemoveProduct = this.onRemoveProduct.bind(this);
   }
   componentDidMount() {
     this.dataListRender();
@@ -127,6 +128,7 @@ class Products extends Component {
     const response = await listProducts(offset, selectedPageSize);
     if (response.error != null) {
       this.setState({ error: response.error.message });
+      return;
     }
     this.setState({
       totalPage: Math.ceil(response.data.total / selectedPageSize),
@@ -140,6 +142,15 @@ class Products extends Component {
   forceRefreshProduct() {
     this.setState({ currentPage: 1 });
     this.dataListRender();
+  }
+
+  async onRemoveProduct() {
+    await Promise.all(
+      this.state.selectedItems.map(async (item) => {
+        await removeProduct(item);
+      })
+    );
+    this.forceRefreshProduct();
   }
 
   render() {
@@ -177,6 +188,7 @@ class Products extends Component {
             itemsLength={items ? items.length : 0}
             pageSizes={pageSizes}
             toggleModal={this.toggleModal}
+            onRemove={this.onRemoveProduct}
           />
           <AddProduct
             refreshProducts={this.forceRefreshProduct}

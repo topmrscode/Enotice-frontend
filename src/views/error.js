@@ -33,7 +33,7 @@ class Error extends Component {
                     <Button
                       href="/organization"
                       color="primary"
-                      className="btn-shadow"
+                      className="btn-shadow default mb-2 "
                       size="lg"
                     >
                       <IntlMessages id="pages.go-back-home" />
