@@ -2,8 +2,8 @@ import React, { Suspense } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import OrganizationLayout from "../../layout/OrganizationLayout";
 
-const Login = React.lazy(() => import("./Login"));
-const Register = React.lazy(() => import("./Register"));
+const Login = import("./Login");
+const Register = import("./Register");
 
 const Auth = ({ match }) => {
   return (

@@ -11,10 +11,10 @@ import AppLocale from "./lang";
 import NotificationContainer from "./components/common/react-notifications/NotificationContainer";
 import AuthRoute from "./helpers/AuthRoute";
 
-const ViewOrganization = React.lazy(() => import("./views/organization"));
-const ViewAuthenticaton = React.lazy(() => import("./views/authentication"));
-const ViewError = React.lazy(() => import("./views/error"));
-const ViewPublic = React.lazy(() => import("./views/public"));
+const ViewOrganization = import("./views/organization");
+const ViewAuthenticaton = import("./views/authentication");
+const ViewError = import("./views/error");
+const ViewPublic = import("./views/public");
 
 class App extends Component {
   constructor(props) {

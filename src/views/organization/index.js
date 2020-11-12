@@ -3,9 +3,9 @@ import { Route, withRouter, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import AppLayout from "../../layout/AppLayout";
 
-const Dashboard = React.lazy(() => import("./Dashboard"));
-const Products = React.lazy(() => import("./Products"));
-const ProductDetails = React.lazy(() => import("./ProductDetails"));
+const Dashboard = import("./Dashboard");
+const Products = import("./Products");
+const ProductDetails = import("./ProductDetails");
 
 class App extends Component {
   render() {
