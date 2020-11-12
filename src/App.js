@@ -11,10 +11,10 @@ import AppLocale from "./lang";
 import NotificationContainer from "./components/common/react-notifications/NotificationContainer";
 import AuthRoute from "./helpers/AuthRoute";
 
-const ViewOrganization = import("./views/organization");
-const ViewAuthenticaton = import("./views/authentication");
-const ViewError = import("./views/error");
-const ViewPublic = import("./views/public");
+import ViewOrganization from "./views/organization";
+import ViewAuthenticaton from "./views/authentication";
+import ViewError from "./views/error";
+import ViewPublic from "./views/public";
 
 class App extends Component {
   constructor(props) {

@@ -3,9 +3,9 @@ import { Route, withRouter, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import AppLayout from "../../layout/AppLayout";
 
-const Dashboard = import("./Dashboard");
-const Products = import("./Products");
-const ProductDetails = import("./ProductDetails");
+import Dashboard from "./Dashboard";
+import Products from "./Products";
+import ProductDetails from "./ProductDetails";
 
 class App extends Component {
   render() {

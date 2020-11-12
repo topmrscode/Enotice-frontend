@@ -2,8 +2,8 @@ import React, { Suspense } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import OrganizationLayout from "../../layout/OrganizationLayout";
 
-const Login = import("./Login");
-const Register = import("./Register");
+import Login from "./Login";
+import Register from "./Register";
 
 const Auth = ({ match }) => {
   return (
